@@ -1,0 +1,295 @@
+{
+	"info": {
+		"_postman_id": "ed28d168-ddc7-4ae9-bf1c-5f3731358509",
+		"name": "Screws - OpenAPI 3.0",
+		"description": "Api for product search (screws), supplier creation, etc.\n\nContact Support:\n Email: oscar.pontebaquero@gmail.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get an existing screw by EAN",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api-screws/v1/findByEAN?EAN=8437008160070",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api-screws",
+						"v1",
+						"findByEAN"
+					],
+					"query": [
+						{
+							"key": "EAN",
+							"value": "8437008160070",
+							"description": "(Required) "
+						}
+					]
+				},
+				"description": "Get an existing screw by EAN product"
+			},
+			"response": [
+				{
+					"name": "OK - The product searched",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api-screws/v1/findByEAN?EAN=Duis laboris tempor",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api-screws",
+								"v1",
+								"findByEAN"
+							],
+							"query": [
+								{
+									"key": "EAN",
+									"value": "Duis laboris tempor"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"name\": \"Leche desnatada\",\n  \"ean\": \"8140150184106\",\n  \"location\": {\n    \"id\": 5,\n    \"name\": \"Mercadona España\"\n  },\n  \"supplier\": {\n    \"id\": 14567,\n    \"name\": \"Hacendado\"\n  }\n}"
+				},
+				{
+					"name": "Bad request - Check your api call",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api-screws/v1/findByEAN?EAN=Duis laboris tempor",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api-screws",
+								"v1",
+								"findByEAN"
+							],
+							"query": [
+								{
+									"key": "EAN",
+									"value": "Duis laboris tempor"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"errors\": [\n    {\n      \"code\": \"400\",\n      \"description\": \"Bad request error\",\n      \"message\": \"The number of digits is not correct\"\n    },\n    {\n      \"code\": \"400\",\n      \"description\": \"Bad request error\",\n      \"message\": \"The number of digits is not correct\"\n    }\n  ]\n}"
+				},
+				{
+					"name": "Unauthorized request - Check your credentials",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api-screws/v1/findByEAN?EAN=Duis laboris tempor",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api-screws",
+								"v1",
+								"findByEAN"
+							],
+							"query": [
+								{
+									"key": "EAN",
+									"value": "Duis laboris tempor"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"errors\": [\n    {\n      \"code\": \"400\",\n      \"description\": \"Bad request error\",\n      \"message\": \"The number of digits is not correct\"\n    },\n    {\n      \"code\": \"400\",\n      \"description\": \"Bad request error\",\n      \"message\": \"The number of digits is not correct\"\n    }\n  ]\n}"
+				},
+				{
+					"name": "Forbidden request - Access denied",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api-screws/v1/findByEAN?EAN=Duis laboris tempor",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api-screws",
+								"v1",
+								"findByEAN"
+							],
+							"query": [
+								{
+									"key": "EAN",
+									"value": "Duis laboris tempor"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"errors\": [\n    {\n      \"code\": \"400\",\n      \"description\": \"Bad request error\",\n      \"message\": \"The number of digits is not correct\"\n    },\n    {\n      \"code\": \"400\",\n      \"description\": \"Bad request error\",\n      \"message\": \"The number of digits is not correct\"\n    }\n  ]\n}"
+				},
+				{
+					"name": "Not found - The product does not exist",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api-screws/v1/findByEAN?EAN=Duis laboris tempor",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api-screws",
+								"v1",
+								"findByEAN"
+							],
+							"query": [
+								{
+									"key": "EAN",
+									"value": "Duis laboris tempor"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"errors\": [\n    {\n      \"code\": \"400\",\n      \"description\": \"Bad request error\",\n      \"message\": \"The number of digits is not correct\"\n    },\n    {\n      \"code\": \"400\",\n      \"description\": \"Bad request error\",\n      \"message\": \"The number of digits is not correct\"\n    }\n  ]\n}"
+				},
+				{
+					"name": "Generic Error - Generic Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api-screws/v1/findByEAN?EAN=Duis laboris tempor",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api-screws",
+								"v1",
+								"findByEAN"
+							],
+							"query": [
+								{
+									"key": "EAN",
+									"value": "Duis laboris tempor"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"errors\": [\n    {\n      \"code\": \"400\",\n      \"description\": \"Bad request error\",\n      \"message\": \"The number of digits is not correct\"\n    },\n    {\n      \"code\": \"400\",\n      \"description\": \"Bad request error\",\n      \"message\": \"The number of digits is not correct\"\n    }\n  ]\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "oscarp",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "oscar",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://localhost:5000/",
+			"type": "string"
+		}
+	]
+}

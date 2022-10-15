@@ -25,8 +25,10 @@ public class Location {
     @Getter
     private Integer id;
 
-    private String name;
-
+    /**
+     * Get the location name using the id.
+     * @return the location name
+     */
     public String getName(){
         if(this.id == 0){
             return COLMENAS;

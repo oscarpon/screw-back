@@ -23,6 +23,10 @@ public class Product {
     @Getter
     private Supplier supplier;
 
+    /**
+     * Get the product ean.
+     * @retun the ean of the product
+     */
     public String getEAN(){
         return String.valueOf(this.supplier.getId()) +
                 this.id +
