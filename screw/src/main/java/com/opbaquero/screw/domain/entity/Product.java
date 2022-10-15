@@ -1,8 +1,8 @@
 package com.opbaquero.screw.domain.entity;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+
+import javax.persistence.*;
 
 @RequiredArgsConstructor
 public class Product {
@@ -14,5 +14,11 @@ public class Product {
     @NonNull
     @Getter
     private String name;
+
+    @Setter
+    private Location location;
+
+    @Setter
+    private Supplier supplier;
 
 }

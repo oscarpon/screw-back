@@ -45,6 +45,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestErrorDTO'
+        '404':
+          description: Not found - The product does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundErrorDTO'
 
 components:
   schemas:
@@ -105,6 +111,17 @@ components:
           example: "The number of digits is not correct"
     400BadRequestErrorDTO:
       title: 400BadRequestError
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'
+    404NotFoundErrorDTO:
+      title: 404NotFoundError
       type: object
       additionalProperties: false
       properties:
