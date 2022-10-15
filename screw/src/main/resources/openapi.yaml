@@ -37,14 +37,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductDTO'
-        '204':
-          description: No Content - The service was executed but there is not any product with EAN
         '400':
           description: Bad request - Check your api call
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestErrorDTO'
+        '401':
+          description: Unauthorized request - Check your credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnautorizedErrorDTO'
+        '403':
+          description: Forbidden request - Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ForbiddenErrorDTO'
+        '404':
+          description: Not found - The product does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundErrorDTO'
+        '500':
+          description: Generic Error - Generic Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500GenericErrorDTO'
 
 components:
   schemas:
@@ -54,6 +76,11 @@ components:
         name:
           type: string
           example: "Leche desnatada"
+        ean:
+          type: string
+          maxLength: 13
+          example: 8437008160070
+          pattern: "[0-9]{12}[012345689]{1}"
         location:
           $ref: '#/components/schemas/LocationDTO'
         supplier:
@@ -105,6 +132,50 @@ components:
           example: "The number of digits is not correct"
     400BadRequestErrorDTO:
       title: 400BadRequestError
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'
+    401UnautorizedErrorDTO:
+      title: 401BadRequestError
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'
+    403ForbiddenErrorDTO:
+      title: 403Forbidden
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'
+    404NotFoundErrorDTO:
+      title: 404NotFoundError
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'
+    500GenericErrorDTO:
+      title: 500GenericError
       type: object
       additionalProperties: false
       properties:
