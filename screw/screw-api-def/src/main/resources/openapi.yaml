@@ -1,0 +1,115 @@
+openapi: "3.0.0"
+info:
+  title: Screws - OpenAPI 3.0
+  description: |-
+    Api for product search (screws), supplier creation, etc.
+  contact:
+    email: oscar.pontebaquero@gmail.com
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://localhost:5000/
+tags:
+  - name: screw
+    description: Everiting about products (Screws)
+  - name: supplier
+    description: Suppliers
+paths:
+  /api-screws/v1/findByEAN:
+    get:
+      tags:
+        - screw
+      summary: Get an existing screw by EAN
+      description: Get an existing screw by EAN product
+      operationId: getProductByEan
+      parameters:
+        - name: EAN
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK - The product searched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+        '204':
+          description: No Content - The service was executed but there is not any product with EAN
+        '400':
+          description: Bad request - Check your api call
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestErrorDTO'
+components:
+  schemas:
+    ProductDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Leche desnatada"
+        location:
+          $ref: '#/components/schemas/LocationDTO'
+        supplier:
+          $ref: '#/components/schemas/SupplierDTO'
+    SupplierDTO:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          description: The supplier id
+          example: 14567
+        name:
+          type: string
+          description: The supplier name
+          example: "Hacendado"
+    LocationDTO:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          description: The location Id
+          example: 5
+        name:
+          type: string
+          description: The location name
+          example: "Mercadona España"
+    ErrorObjectDTO:
+      title: ErrorObject
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+          example: "400"
+        description:
+          type: string
+          maxLength: 100
+          description: Error description
+          example: "Bad request error"
+        message:
+          type: string
+          maxLength: 1000
+          example: "The number of digits is not correct"
+    400BadRequestErrorDTO:
+      title: 400BadRequestError
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'
