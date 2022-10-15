@@ -1,0 +1,187 @@
+openapi: 3.0.3
+info:
+  title: Screws - OpenAPI 3.0
+  description: |-
+    Api for product search (screws), supplier creation, etc.
+  contact:
+    email: oscar.pontebaquero@gmail.com
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://localhost:5000/
+tags:
+  - name: screw
+    description: Everiting about products (Screws)
+  - name: supplier
+    description: Suppliers
+paths:
+  /api-screws/v1/findByEAN:
+    get:
+      tags:
+        - screw
+      summary: Get an existing screw by EAN
+      description: Get an existing screw by EAN product
+      operationId: getProductByEan
+      parameters:
+        - name: EAN
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK - The product searched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+        '400':
+          description: Bad request - Check your api call
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestErrorDTO'
+        '401':
+          description: Unauthorized request - Check your credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnautorizedErrorDTO'
+        '403':
+          description: Forbidden request - Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ForbiddenErrorDTO'
+        '404':
+          description: Not found - The product does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundErrorDTO'
+        '500':
+          description: Generic Error - Generic Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500GenericErrorDTO'
+
+components:
+  schemas:
+    ProductDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Leche desnatada"
+        ean:
+          type: string
+          maxLength: 13
+          example: 8437008160070
+          pattern: "[0-9]{12}[012345689]{1}"
+        location:
+          $ref: '#/components/schemas/LocationDTO'
+        supplier:
+          $ref: '#/components/schemas/SupplierDTO'
+    SupplierDTO:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          description: The supplier id
+          example: 14567
+        name:
+          type: string
+          description: The supplier name
+          example: "Hacendado"
+    LocationDTO:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          description: The location Id
+          example: 5
+        name:
+          type: string
+          description: The location name
+          example: "Mercadona España"
+    ErrorObjectDTO:
+      title: ErrorObject
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+          example: "400"
+        description:
+          type: string
+          maxLength: 100
+          description: Error description
+          example: "Bad request error"
+        message:
+          type: string
+          maxLength: 1000
+          example: "The number of digits is not correct"
+    400BadRequestErrorDTO:
+      title: 400BadRequestError
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'
+    401UnautorizedErrorDTO:
+      title: 401BadRequestError
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'
+    403ForbiddenErrorDTO:
+      title: 403Forbidden
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'
+    404NotFoundErrorDTO:
+      title: 404NotFoundError
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'
+    500GenericErrorDTO:
+      title: 500GenericError
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          maxItems: 100
+          description: Details of each error
+          items:
+            $ref: '#/components/schemas/ErrorObjectDTO'

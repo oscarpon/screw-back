@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  database:
+    image: mysql
+    container_name: database
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: springdb   
+      MYSQL_USER: opbaquero
+      MYSQL_PASSWORD: 5809GJF_honda
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3306:3306
+    volumes:
+     - dockerAngularSpringDatabaseData:/var/lib/mysql
+    networks:
+     - backendNetwork
+     
+  screw-back:
+    image: adoptopenjdk/openjdk11:jre-11.0.11_9
+    container_name: screw-back
+    ports:
+      - 5000:5000
+    depends_on:
+      - database
+    volumes:
+      - ./screw/target/screw-0.0.1-SNAPSHOT.jar:/screw-back.jar
+    command: ["java", "-jar","-Dspring.profiles.active=docker", "screw-back.jar"]
+    networks:
+      - backendNetwork
+
+volumes:
+  dockerAngularSpringDatabaseData:
+  
+networks:
+  backendNetwork:
