@@ -1,32 +1,46 @@
 package com.opbaquero.screw.application.usecase;
 
+import com.opbaquero.screw.domain.entity.EAN;
 import com.opbaquero.screw.domain.entity.Location;
 import com.opbaquero.screw.domain.entity.Product;
+import com.opbaquero.screw.domain.entity.Supplier;
+import com.opbaquero.screw.domain.exception.SupplierNotFoundException;
 import com.opbaquero.screw.domain.repository.ProductRepository;
+import com.opbaquero.screw.domain.repository.SupplierRepository;
 import com.opbaquero.screw.domain.usecase.ScrewUseCase;
 import org.springframework.stereotype.Component;
+
+
+import java.util.Optional;
 
 @Component
 public class ScrewUseCaseImpl implements ScrewUseCase {
 
     final ProductRepository productRepository;
 
-    public ScrewUseCaseImpl(ProductRepository productRepository) {
+    final SupplierRepository supplierRepository;
+
+    public ScrewUseCaseImpl(ProductRepository productRepository, SupplierRepository supplierRepository) {
         this.productRepository = productRepository;
+        this.supplierRepository = supplierRepository;
     }
 
     @Override
-    public Product getProductByEan(String ean) {
+    public Product getProductByEan(EAN ean) {
 
-        String supplierId = ean.substring(0, 7);
-        String productId = ean.substring(7, 12);
-        String locationId = ean.substring(12, 13);
+        Product product = this.productRepository.findProductById(ean.getProductId());
+        Optional<Supplier> supplier = this.supplierRepository.getSupplierById(ean.getSupplierId());
 
-        Product product = this.productRepository.findProductById(Integer.valueOf(productId));
+        if(supplier.isPresent()){
+            product.setSupplier(supplier.get());
+        }else{
+            throw new SupplierNotFoundException(ean.getSupplierId());
+        }
 
-        Location location = new Location(Integer.valueOf(locationId));
+        Location location = new Location(ean.getLocationId());
+        product.setLocation(location);
 
-        return null;
+        return product;
     }
 
 }

@@ -16,9 +16,17 @@ public class Product {
     private String name;
 
     @Setter
+    @Getter
     private Location location;
 
     @Setter
+    @Getter
     private Supplier supplier;
+
+    public String getEAN(){
+        return String.valueOf(this.supplier.getId()) +
+                this.id +
+                this.location.getId();
+    }
 
 }

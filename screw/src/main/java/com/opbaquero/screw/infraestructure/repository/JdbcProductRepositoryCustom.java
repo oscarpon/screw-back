@@ -3,7 +3,7 @@ package com.opbaquero.screw.infraestructure.repository;
 import com.opbaquero.screw.domain.entity.Product;
 import com.opbaquero.screw.domain.exception.ProductNotFoundException;
 import com.opbaquero.screw.domain.repository.ProductRepository;
-import com.opbaquero.screw.domain.repository.mapper.ProductRowMapper;
+import com.opbaquero.screw.infraestructure.repository.mapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
