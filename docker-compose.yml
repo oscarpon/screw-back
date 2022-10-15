@@ -17,9 +17,9 @@ services:
     networks:
      - backendNetwork
      
-  conexiona-back:
+  screw-back:
     image: adoptopenjdk/openjdk11:jre-11.0.11_9
-    container_name: conexiona-back
+    container_name: screw-back
     ports:
       - 5000:5000
     depends_on:

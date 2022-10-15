@@ -101,7 +101,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>2.7.4</version>
 				<configuration>
-					<mainClass>com.opbaquero.conexionaback.ConexionaBackApplication</mainClass>
+					<mainClass>com.opbaquero.screw.ScrewApplication</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
