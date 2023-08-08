@@ -1,4 +1,4 @@
-FROM openjdk:17.0.2
+FROM openjdk:22-ea-1-slim-bookworm
 VOLUME /tmp
 ADD .target/screw-0.0.1-SNAPSHOT.jar backend.jar
 EXPOSE 5000
